@@ -1,5 +1,6 @@
 set :remote, "/home/rcrowley/work/django-2010-11-17"
 
+set :user, "rcrowley"
 role :www, "rcrowley.org"
 
 task :static do
