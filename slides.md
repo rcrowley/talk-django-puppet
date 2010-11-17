@@ -8,8 +8,8 @@
 
 # Hi, I&#8217;m Richard Crowley
 
-* Equal opportunity technology hater
-* DevStructure&#8217;s operator and UNIX hacker
+* Equal opportunity technology hater.
+* DevStructure&#8217;s operator and UNIX hacker.
 
 
 
@@ -31,7 +31,7 @@
 
 # But first, resources
 
-* The smallest unit of configuration
+* The smallest unit of configuration.
 * Have a *type*, a *name*, and *parameters*.
 
 
@@ -43,12 +43,12 @@
 
 	@@@ puppet
 	stage { "pre": before => Stage["main"] }
-	class pre {
+	class python {
 		package {
 			"build-essential": ensure => latest;
 			"python": ensure => "2.6.6-2ubuntu1";
 			"python-dev": ensure => "2.6.6-2ubuntu1";
-			"python-setuptools": ensure => "latest";
+			"python-setuptools": ensure => latest;
 		}
 		exec { "easy_install pip":
 			path => "/usr/local/bin:/usr/bin:/bin",
@@ -57,7 +57,7 @@
 			subscribe => Package["python-setuptools"],
 		}
 	}
-	class { "pre": stage => "pre" }
+	class { "python": stage => "pre" }
 
 
 
@@ -269,7 +269,7 @@
 
 !SLIDE bullets
 
-# We need web scale!
+# We need a grown up server
 
 	@@@ puppet
 	package {
@@ -350,15 +350,6 @@
 
 !SLIDE bullets
 
-# Apache for all
-
-* `puppet apply --templatedir=. deps.pp`
-* `fab puppet`
-
-
-
-!SLIDE bullets
-
 # Does `mysite.wsgi` really belong in Puppet?
 
 * Environment versus application.
@@ -400,6 +391,15 @@
 
 !SLIDE bullets
 
+# Apache for all
+
+* `puppet apply --templatedir=. deps.pp`
+* `fab puppet`
+
+
+
+!SLIDE bullets
+
 # Puppet master and agents
 
 * Master knows best.
@@ -426,12 +426,12 @@
 
 	@@@ puppet
 	stage { "pre": before => Stage["main"] }
-	class pre {
+	class python {
 		package {
 			"build-essential": ensure => latest;
 			"python": ensure => "2.6.6-2ubuntu1";
 			"python-dev": ensure => "2.6.6-2ubuntu1";
-			"python-setuptools": ensure => "latest";
+			"python-setuptools": ensure => latest;
 		}
 		exec { "easy_install pip":
 			path => "/usr/local/bin:/usr/bin:/bin",
@@ -440,7 +440,7 @@
 			subscribe => Package["python-setuptools"],
 		}
 	}
-	class { "pre": stage => "pre" }
+	class { "python": stage => "pre" }
 
 
 
@@ -459,9 +459,10 @@
 		}
 		file {
 			# Prefix template paths with the module name.
-			"/usr/local/share/wsgi/mysite/mysite.wsgi":
-				content => template("mysite/mysite.wsgi"),
-				ensure => file;
+			"/etc/apache2/sites-available/mysite":
+				content => template("mysite/mysite.erb"),
+				ensure => file,
+				require => Package["apache2-mpm-worker"];
 			# Et cetera.
 		}
 		service {
