@@ -48,7 +48,7 @@
 			"build-essential": ensure => latest;
 			"python": ensure => "2.6.6-2ubuntu1";
 			"python-dev": ensure => "2.6.6-2ubuntu1";
-			"python-setuptools": ensure => latest;
+			"python-setuptools": ensure => installed;
 		}
 		exec { "easy_install pip":
 			path => "/usr/local/bin:/usr/bin:/bin",
@@ -431,7 +431,7 @@
 			"build-essential": ensure => latest;
 			"python": ensure => "2.6.6-2ubuntu1";
 			"python-dev": ensure => "2.6.6-2ubuntu1";
-			"python-setuptools": ensure => latest;
+			"python-setuptools": ensure => installed;
 		}
 		exec { "easy_install pip":
 			path => "/usr/local/bin:/usr/bin:/bin",
